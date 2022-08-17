@@ -34,11 +34,19 @@ class Grustno:
         api = API + '/posts?my=2&hell=1'
         return requests.get(api, headers=self.headers).json()['data'][:50]
 
+    def get_hot_posts(self):
+        api = API + '/posts'
+        return requests.get(api, headers=self.headers).json()['data'][:50]
+
 
 def main():
     instance = Grustno()
     while True:
         posts = instance.get_list_posts()
+        for post in posts:
+            post_id = post.get('id')
+            instance.like(post_id)
+        posts = instance.get_hot_posts()
         for post in posts:
             post_id = post.get('id')
             instance.like(post_id)
