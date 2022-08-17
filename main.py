@@ -50,6 +50,5 @@ def main():
         sleep(10)
 
 
-if __name__ == '__main__':
-    print('App is running')
-    main()
+print('App is running')
+main()
