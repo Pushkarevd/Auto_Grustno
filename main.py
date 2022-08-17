@@ -1,7 +1,10 @@
 import requests
 import os
 from time import sleep
+import logging
 
+
+LOGGER = logging.getLogger('grustno_bot')
 
 API = "https://api.grustnogram.ru"
 
@@ -19,6 +22,7 @@ class Grustno:
             "email": os.environ['mail'],
             "password": os.environ['password']
         }
+        LOGGER.info(data)
         response = requests.post(
             f"{API}/sessions",
             json=data,
@@ -42,6 +46,7 @@ def main():
         for post in posts:
             post_id = post.get('id')
             instance.like(post_id)
+        LOGGER.info(f'Liked 10 posts, sleep for 10 seconds')
         sleep(10)
 
 
