@@ -32,7 +32,7 @@ class Grustno:
 
     def get_list_posts(self):
         api = API + '/posts?my=2&hell=1'
-        return requests.get(api, headers=self.headers).json()['data'][:10]
+        return requests.get(api, headers=self.headers).json()['data'][:50]
 
 
 def main():
