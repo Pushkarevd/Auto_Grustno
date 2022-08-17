@@ -42,7 +42,6 @@ def main():
         for post in posts:
             post_id = post.get('id')
             instance.like(post_id)
-            print(f'Liked post with id {post_id}')
         sleep(10)
 
 
