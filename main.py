@@ -16,8 +16,8 @@ class Grustno:
 
     def login(self):
         data = {
-            "email": os.environ['mail'],
-            "password": os.environ['password']
+            "email": 'blank',#os.environ['mail'],
+            "password": 123124 #os.environ['password']
         }
         response = requests.post(
             f"{API}/sessions",
@@ -41,6 +41,7 @@ class Grustno:
 
 def main():
     instance = Grustno()
+    counter = 0
     while True:
         posts = instance.get_list_posts()
         for post in posts:
@@ -51,6 +52,9 @@ def main():
             post_id = post.get('id')
             instance.like(post_id)
         sleep(10)
+        counter += 10
+        if counter == 10800:
+            instance = Grustno()
 
 
 print('App is running')
