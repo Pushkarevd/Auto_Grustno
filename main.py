@@ -16,8 +16,8 @@ class Grustno:
 
     def login(self):
         data = {
-            "email": 'blank',#os.environ['mail'],
-            "password": 123124 #os.environ['password']
+            "email": os.environ['mail'],
+            "password": os.environ['password']
         }
         response = requests.post(
             f"{API}/sessions",
