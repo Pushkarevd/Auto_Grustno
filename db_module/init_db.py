@@ -3,14 +3,14 @@ from connector import Connector
 
 create_tables = """
     CREATE TABLE SUBS (
-        id SERIAL PRIMARY KEY,
-        name varchar(64)
+        id SERIAL PRIMARY KEY NOT NULL,
+        counter INT NOT NULL,
+        timestamp_sub TIMESTAMP NOT NULL
     );
     
     CREATE TABLE TODAY_LIKES(
-        id SERIAL PRIMARY KEY,
-        name varchar(64),
-        like_time timestamp
+        id integer PRIMARY KEY NOT NULL,
+        like_time timestamp NOT NULL
     );
 """
 
