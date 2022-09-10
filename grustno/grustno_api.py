@@ -1,6 +1,5 @@
 import requests
 import os
-from time import sleep
 
 API = "https://api.grustnogram.ru"
 
@@ -42,12 +41,40 @@ class Grustno:
         return self.session.get(api, headers=self.headers).json()['data'][:25]
 
     def get_subs(self) -> list:
-        response = self.session.get(
-            f"{API}/followers/{self.user_id}",
-            headers=self.headers).json()
+        subs = []
+        all_subs = []
+        target = self.get_self().get('data').get('followers')
+        while len(all_subs) != target:
+            if len(subs) == 0:
+                offset = None
+            else:
+                offset = self.__search_user(subs[-1])
+
+            subs = self.__get_subs(offset)
+            all_subs.extend(subs)
+        return all_subs
+
+    def __search_user(self, query: str) -> int:
+        # Only for subs offset
+        return requests.get(
+            f"{API}/users?q={query}",
+            headers=self.headers).json().get('data')[0].get('id')
+
+    def __get_subs(self, offset=None) -> list:
+        if offset is not None:
+            response = self.session.get(
+                f"{API}/followers/{self.user_id}?id={self.user_id}&offset_id={offset}",
+                headers=self.headers).json()
+        else:
+            response = self.session.get(
+                f"{API}/followers/{self.user_id}?id={self.user_id}",
+                headers=self.headers).json()
         return [user['nickname'] for user in response.get('data')]
 
     def get_info(self, username: str) -> dict:
         return self.session.get(
             f"{API}/users/{username}",
             headers=self.headers).json()
+
+    def get_self(self):
+        return self.session.get('https://api.grustnogram.ru/users/self', headers=self.headers).json()
