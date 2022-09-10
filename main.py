@@ -34,6 +34,13 @@ def like_all_posts(instance: gr_api.Grustno, diff_set_hot: list, diff_set_unknow
                 sleep(.1)
                 instance.like(post_id)
                 instance.like(post_id)
+        for post in posts:
+            post_id = post.get('id')
+            instance.like(post_id)
+            instance.like(post_id)
+            sleep(.1)
+            instance.like(post_id)
+            instance.like(post_id)
 
     set_likes(instance.get_list_posts(), diff_set_unknown)
     set_likes(instance.get_hot_posts(), diff_set_hot)
