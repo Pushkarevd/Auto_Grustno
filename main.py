@@ -66,5 +66,4 @@ if __name__ == "__main__":
         if counter == 6:
             counter = 0
             update_subs(instance, connector)
-        break
 
