@@ -11,6 +11,7 @@ class Connector:
             host=host,
             port=port
         )
+        print(self.conn)
         self.conn.autocommit = True
 
     def execute_command(self, command: str):

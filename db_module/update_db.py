@@ -1,13 +1,13 @@
-def create_update_command(id, timestamp):
+def create_update_command(id: int, timestamp, name: str):
     update_command = f"""
-    INSERT INTO today_likes VALUES ({id},'{timestamp}')
+    INSERT INTO likes VALUES ({id},'{timestamp.strftime("%m-%d-%Y, %H:%M:%s")}', '{name}')
     """
     return update_command
 
 
-def check_like(id):
+def check_like(id: int):
     check_command = f"""
-    SELECT * FROM today_likes
+    SELECT * FROM likes
     WHERE id='{id}'
     """
 

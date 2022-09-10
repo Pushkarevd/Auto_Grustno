@@ -1,16 +1,17 @@
 from connector import Connector
-
+import os
 
 create_tables = """
-    CREATE TABLE SUBS (
+    CREATE TABLE subs (
         id SERIAL PRIMARY KEY NOT NULL,
-        counter INT NOT NULL,
-        timestamp_sub TIMESTAMP NOT NULL
+        name varchar(64) NOT NULL,
+        timestamp_sub TIMESTAMP
     );
     
-    CREATE TABLE TODAY_LIKES(
+    CREATE TABLE likes(
         id integer PRIMARY KEY NOT NULL,
-        like_time timestamp NOT NULL
+        like_time timestamp NOT NULL,
+        author varchar(64)
     );
 """
 
@@ -22,11 +23,11 @@ check_table = """
 """
 
 params = {
-    'database': 'd25e0t64l9dmrk',
-    'host': 'ec2-3-223-242-224.compute-1.amazonaws.com',
-    'user': 'xrrhghlboqjmce',
-    'port': '5432',
-    'password': '44b1e4189704f6e325b297a759b0668e6f6b720c04536aeb819bc6b55b5287dd'
+    'database': 'grustno_bot',
+    'user': 'grustno_bot',
+    'password': os.environ.get('db_pass'),
+    'host': os.environ.get('db_host', '127.0.0.1'),
+    'port': '5432'
 }
 
 

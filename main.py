@@ -1,16 +1,16 @@
 from grustno import grustno_api as gr_api
-from statistics import stats as st
 from time import sleep
 from datetime import datetime
 from db_module.update_db import create_update_command, check_like
 from db_module.connector import Connector
+from os import environ
 
 params = {
-    'database': 'd25e0t64l9dmrk',
-    'host': 'ec2-3-223-242-224.compute-1.amazonaws.com',
-    'user': 'xrrhghlboqjmce',
-    'port': '5432',
-    'password': '44b1e4189704f6e325b297a759b0668e6f6b720c04536aeb819bc6b55b5287dd'
+    'database': 'grustno_bot',
+    'user': 'grustno_bot',
+    'password': environ.get('db_pass'),
+    'host': environ.get('db_host', '127.0.0.1'),
+    'port': '5432'
 }
 
 
@@ -18,13 +18,14 @@ def like_all_posts(instance: gr_api.Grustno, diff_set_hot: list, diff_set_unknow
     def set_likes(posts, diff_set):
         for post in posts:
             post_id = post.get('id')
+            username = post.get('user').get('nickname')
 
             if post_id not in diff_set:
 
                 command = check_like(post_id)
                 if not connector.execute_command(command):
-                    print(f'{post_id} check passed')
-                    command = create_update_command(post_id, datetime.now())
+                    command = create_update_command(post_id, datetime.now(), username)
+                    print(f'Post from {username} - {post_id} liked at {datetime.now()}')
                     connector.execute_command(command)
 
                 diff_set.append(post_id)

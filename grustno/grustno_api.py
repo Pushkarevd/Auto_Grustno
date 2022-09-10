@@ -18,8 +18,8 @@ class Grustno:
     def login(self):
         session = requests.Session()
         data = {
-            "email": 'willyphoto372@gmail.com',
-            "password": 'Papoogtv2523'
+            "email": os.environ.get('mail'),
+            "password": os.environ.get('password')
         }
         response = session.post(
             f"{API}/sessions",
@@ -51,3 +51,6 @@ class Grustno:
         return self.session.get(
             f"{API}/users/{username}",
             headers=self.headers).json()
+
+    def get_users_list(self, top: int = 1):
+        return self.session.get('https://grustnogram.ru/dashboard/').json()
