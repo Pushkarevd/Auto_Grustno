@@ -4,6 +4,7 @@ from datetime import datetime
 from db_module.update_db import create_update_command, check_like
 from db_module.connector import Connector
 from os import environ
+from subs_module.load_subs import update_subs
 
 params = {
     'database': 'grustno_bot',
@@ -65,3 +66,5 @@ if __name__ == "__main__":
         like_all_posts(instance, diff_set_hot, diff_set_unknown, connector)
         sleep(10)
         diff_set_unknown, diff_set_hot = check_diff_sets(diff_set_hot, diff_set_unknown)
+        update_subs(instance, connector)
+
