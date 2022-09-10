@@ -51,6 +51,3 @@ class Grustno:
         return self.session.get(
             f"{API}/users/{username}",
             headers=self.headers).json()
-
-    def get_users_list(self, top: int = 1):
-        return self.session.get('https://grustnogram.ru/dashboard/').json()

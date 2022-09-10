@@ -1,6 +1,6 @@
 def create_update_command(id: int, timestamp, name: str):
     update_command = f"""
-    INSERT INTO likes VALUES ({id},'{timestamp.strftime("%m-%d-%Y, %H:%M:%s")}', '{name}')
+    INSERT INTO likes VALUES ({id},'{timestamp}', '{name}')
     """
     return update_command
 
