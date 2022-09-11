@@ -9,8 +9,8 @@ from subs_module.load_subs import update_subs
 params = {
     'database': 'grustno_bot',
     'user': 'grustno_bot',
-    'password': 'no1trol',
-    'host': '192.168.0.137',
+    'password': environ.get('db_pass'),
+    'host': environ.get('db_host', '127.0.0.1'),
     'port': '5432'
 }
 
@@ -26,17 +26,15 @@ def like_all_posts(instance: gr_api.Grustno, diff_set_hot: list, diff_set_unknow
                 command = check_like(post_id)
                 if not connector.execute_command(command):
                     command = create_update_command(post_id, datetime.now(), username)
-                    print(f'Post from {username} - {post_id} liked at {datetime.now()}')
+                    instance.like(post_id)
                     connector.execute_command(command)
 
                 diff_set.append(post_id)
-                print(instance.like(post_id))
-                sleep(.2)
                 instance.like(post_id)
+
         for post in posts:
             post_id = post.get('id')
-            instance.like(post_id)
-            sleep(.2)
+
             instance.like(post_id)
 
     set_likes(instance.get_list_posts(), diff_set_unknown)
@@ -60,10 +58,10 @@ if __name__ == "__main__":
     counter = 0
     while True:
         like_all_posts(instance, diff_set_hot, diff_set_unknown, connector)
-        sleep(10)
+        sleep(15)
         counter += 1
         diff_set_unknown, diff_set_hot = check_diff_sets(diff_set_hot, diff_set_unknown)
-        if counter == 6:
+        if counter == 6 * 5:
             counter = 0
             update_subs(instance, connector)
 
