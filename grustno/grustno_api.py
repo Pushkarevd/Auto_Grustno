@@ -77,4 +77,4 @@ class Grustno:
             headers=self.headers).json()
 
     def get_self(self):
-        return self.session.get('https://api.grustnogram.ru/users/self', headers=self.headers).json()
+        return self.session.get(f'{API}/users/self', headers=self.headers).json()
