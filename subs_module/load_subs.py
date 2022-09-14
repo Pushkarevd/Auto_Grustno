@@ -29,7 +29,7 @@ def update_subs(instance: Grustno, connector: Connector):
     # Get new subs
     new_subs = subs_from_api - subs_from_db
     # Get unsub users
-    unsubed_users = subs_from_db - new_subs
+    unsubed_users = subs_from_db - subs_from_api
 
     if not new_subs:
         return None
@@ -40,7 +40,6 @@ def update_subs(instance: Grustno, connector: Connector):
         connector.execute_command(load_sub)
     for sub in unsubed_users:
         delete_unsubed_user = f"DELETE FROM subs WHERE name = {sub}"
-
         connector.execute_command(delete_unsubed_user)
 
 
