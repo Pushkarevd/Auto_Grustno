@@ -19,7 +19,8 @@ WHITE_LIST = ['blue_devils', 'balverin']
 
 def like_all_posts(instance: gr_api.Grustno, diff_set_hot: list, diff_set_unknown: list, connector: Connector) -> None:
     def set_likes(posts, diff_set):
-        filtered_posts = [post for post in posts if post.get('user') not in WHITE_LIST]
+        filtered_posts = [post for post in posts
+                          if post.get('user').get('nickname') not in WHITE_LIST]
         for post in filtered_posts:
             post_id = post.get('id')
             username = post.get('user').get('nickname')
